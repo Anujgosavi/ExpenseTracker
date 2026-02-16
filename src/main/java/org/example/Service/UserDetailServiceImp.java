@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.example.Entity.RefreshToken;
 import org.example.Entity.UserInfo;
+import org.example.Model.UserInfoDto;
 import org.example.Repository.RefreshTokenRepository;
 import org.example.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.UUID;
 
 
@@ -38,5 +41,22 @@ public class UserDetailServiceImp implements UserDetailsService {
         }
 
             return new CustomUserDetails(user);
+    }
+
+    public UserInfo checkIfUserAlreadyExists(UserInfoDto userInfoDto){
+        return userRepository.findByUserName(userInfoDto.getUserName()) ;
+    }
+
+
+    public Boolean signupUser(UserInfoDto userInfoDto) {
+        userInfoDto.setPassword(passwordEncoder.encode(userInfoDto.getPassword()));
+        if (Objects.nonNull(checkIfUserAlreadyExists(userInfoDto))){
+            return false;
+        }
+
+        String userId = UUID.randomUUID().toString();
+        userRepository.save(new UserInfo(userId, userInfoDto.getUserName(),
+                userInfoDto.getPassword(), new HashSet<>()));
+        return true;
     }
 }

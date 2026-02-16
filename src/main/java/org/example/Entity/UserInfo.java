@@ -21,7 +21,7 @@ public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    private Long userId;
+    private String userId;
 
     private String userName;
     private String passWord;

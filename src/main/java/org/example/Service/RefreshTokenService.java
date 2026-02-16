@@ -6,7 +6,9 @@ import org.example.Repository.RefreshTokenRepository;
 import org.example.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.swing.text.html.Option;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 public class RefreshTokenService {
@@ -39,6 +41,10 @@ public class RefreshTokenService {
         }
 
         return token;
+    }
+
+    public Optional<RefreshToken> findByToken(String token){
+        return refreshTokenRepository.findByToken(token) ;
     }
 
 }
