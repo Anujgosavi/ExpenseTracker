@@ -1,9 +1,9 @@
 package org.example.auth;
 
-import authservice.repository.UserRepository;
-import authservice.service.UserDetailsServiceImpl;
+
 import lombok.Data;
-import org.example.Service.UserDetailServiceImp;
+import org.example.repository.UserRepository;
+import org.example.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,7 +32,7 @@ public class SecurityConfig {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    private final UserDetailServiceImp userDetailsServiceImpl;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
 
     @Bean

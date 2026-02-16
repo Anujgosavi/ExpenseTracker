@@ -1,17 +1,18 @@
-package org.example.Controller;
+package org.example.controller;
 
-import org.example.Entity.RefreshToken;
-import org.example.Service.JwtService;
-import org.example.Service.RefreshTokenService;
+import org.example.entities.RefreshToken;
 import org.example.request.AuthRequestDTO;
 import org.example.request.RefreshTokenRequestDTO;
 import org.example.response.JwtResponseDTO;
+import org.example.service.JwtService;
+import org.example.service.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
