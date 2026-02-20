@@ -35,12 +35,13 @@ public class JwtService {
 
     private Claims extractAllClaims(String token) {
         return Jwts
-                .parser()
+                .parserBuilder()
                 .setSigningKey(getSignKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
+
 
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
