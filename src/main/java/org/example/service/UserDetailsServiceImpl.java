@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.entities.UserInfo;
+import org.example.eventProducer.UserInfoEvent;
 import org.example.eventProducer.UserInfoProducer;
 import org.example.model.UserInfoDto;
 import org.example.repository.UserRepository;
@@ -68,7 +69,19 @@ public class UserDetailsServiceImpl implements UserDetailsService
         userRepository.save(new UserInfo(userId, userInfoDto.getUsername(), userInfoDto.getPassword(), new HashSet<>()));
         // pushEventToQueue
 
-        userInfoProducer.sendEventToKafka(userInfoDto);
+        UserInfoEvent userInfoEvent = userInfoEventToPublish(userInfoDto , userId) ;
+
+        userInfoProducer.sendEventToKafka(userInfoEvent);
         return true;
+    }
+
+    private UserInfoEvent userInfoEventToPublish(UserInfoDto userInfoDto, String userId){
+        return UserInfoEvent.builder()
+                .userId(userId)
+                .firstName(userInfoDto.getFirstName())
+                .lastName(userInfoDto.getLastName())
+                .email(userInfoDto.getEmail())
+                .phoneNumber(userInfoDto.getPhoneNumber())
+                .build();
     }
 }
